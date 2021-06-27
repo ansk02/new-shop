@@ -12,7 +12,7 @@ class Product(models.Model):
 	images          = models.ImageField(upload_to='photos/products')
 	stock           = models.IntegerField()
 	is_available    = models.BooleanField('Disponible ? ',default=True)
-	category        = models.ForeignKey( Category, on_delete=models.CASCADE)
+	category        = models.ForeignKey( Category, on_delete=models.CASCADE, verbose_name='categorie')
 	created_date    = models.DateTimeField('Date d\'ajout', auto_now_add=True)
 	modified_date   = models.DateTimeField('Dernière modification', auto_now=True)
 
@@ -42,11 +42,11 @@ variation_category_choice = (
 )
 
 class Variation(models.Model):
-    product             = models.ForeignKey(Product, on_delete=models.CASCADE)
-    variation_category  = models.CharField(max_length=100, choices=variation_category_choice)
-    variation_value     = models.CharField(max_length=100)
-    is_active           = models.BooleanField(default=True)
-    created_date        = models.DateTimeField(auto_now=True)
+    product             = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Variation produits')
+    variation_category  = models.CharField(max_length=100, choices=variation_category_choice, verbose_name='variation categorie')
+    variation_value     = models.CharField(max_length=100, verbose_name='variation valeur')
+    is_active           = models.BooleanField(default=True, verbose_name='activé')
+    created_date        = models.DateTimeField(auto_now=True, verbose_name='Date de creation')
 
     objects = VariationManager()
 

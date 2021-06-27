@@ -54,7 +54,7 @@ class MyAccountManager(BaseUserManager):
 class Account(AbstractBaseUser):
 	first_name = models.CharField('Prénom' ,max_length=200)
 	last_name = models.CharField('Nom' ,max_length = 200)
-	username = models.CharField('Nom d\'utilisateur' ,max_length = 200, unique=True)
+	username = models.CharField('Pseudo' ,max_length = 200, unique=True)
 	email = models.EmailField('Email' ,max_length = 200, unique = True)
 	phone_number = models.CharField('Téléphone' ,max_length = 60)
 	city = models.CharField('Ville' ,max_length = 60)

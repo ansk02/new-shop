@@ -42,20 +42,17 @@
 			<figcaption class="info">
 				<a href="{{ cart_item.product.get_url }}" class="title text-dark">{{ cart_item.product.product_name }}</a>
 
+				<!-- Here I can't display variation_category & variation_value in cart.html -->
 				<p class="text-muted small">
-					
 					{% if cart_item.variations.all %}
-
-					     {% for item in cart_item.variations.all %}
-
-					         {{ item.variation_category | capfirst  }} : {{ item.variation_value | capfirst }}
-					     	
-					     {% endfor %}
-						
+						{% for item in cart_item.variations.all %}
+							couleur {{ item.variation_category | capfirst }} <br>
+							taille {{ item.variation_value | capfirst }} <br>
+						{% endfor %}
 					{% endif %}
-
 				</p>
-			
+
+				<!-- END-->
 			</figcaption>
 		</figure>
 	</td>

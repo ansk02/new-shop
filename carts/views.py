@@ -6,7 +6,6 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
 # Create your views here.
-from django.http import HttpResponse
 
 def _cart_id(request):
     cart = request.session.session_key
@@ -30,7 +29,6 @@ def add_cart(request, product_id):
             except:
                 pass
 
-
     try:
         cart = Cart.objects.get(cart_id=_cart_id(request)) # get the cart using the cart_id present in the session
     except Cart.DoesNotExist:
@@ -52,7 +50,7 @@ def add_cart(request, product_id):
             ex_var_list.append(list(existing_variation))
             id.append(item.id)
 
-        print(ex_var_list)
+        # print(ex_var_list)
 
         if product_variation in ex_var_list:
             # increase the cart item quantity
@@ -60,8 +58,8 @@ def add_cart(request, product_id):
             item_id = id[index]
             item = CartItem.objects.get(product=product, id=item_id)
             item.quantity += 1
-            return HttpResponse(item)
-            exit()
+            # return HttpResponse(item)
+            # exit()
             item.save()
 
         else:
@@ -80,6 +78,8 @@ def add_cart(request, product_id):
             cart_item.variations.clear()
             cart_item.variations.add(*product_variation)
         cart_item.save()
+
+
     return redirect('cart')
 
 
@@ -90,6 +90,7 @@ def cart(request, total=0, quantity=0, cart_item=None):
     try:
         tax = 0
         grand_total = 0
+        cart_items = None
         cart = Cart.objects.get(cart_id=_cart_id(request))
         cart_items = CartItem.objects.filter(cart=cart, is_active=True)
 
@@ -116,6 +117,8 @@ def cart(request, total=0, quantity=0, cart_item=None):
 
 
 def remove_cart(request, product_id):
+
+    cart_item = None
 
     cart = Cart.objects.get(cart_id=_cart_id(request))
     product = get_object_or_404(Product, id=product_id)
